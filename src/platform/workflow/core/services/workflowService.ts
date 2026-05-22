@@ -483,7 +483,7 @@ export const useWorkflowService = () => {
               ) ?? freshLoadMode
             trackIfEnteringApp(loadedWorkflow)
           }
-          loadedWorkflow.changeTracker.reset(workflowData)
+          loadedWorkflow.changeTracker.syncCanvasState(workflowData)
           loadedWorkflow.changeTracker.restore()
           return
         }
@@ -504,7 +504,7 @@ export const useWorkflowService = () => {
       loadedWorkflow.initialMode = freshLoadMode
       trackIfEnteringApp(loadedWorkflow)
     }
-    loadedWorkflow.changeTracker.reset(workflowData)
+    loadedWorkflow.changeTracker.syncCanvasState(workflowData)
     loadedWorkflow.changeTracker.restore()
   }
 
