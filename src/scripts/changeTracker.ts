@@ -82,13 +82,22 @@ export class ChangeTracker {
   }
 
   /**
-   * Save the current state as the initial state.
+   * Sync activeState with the freshly-configured canvas without touching
+   * initialState. Called after loadGraphData() so activeState reflects any
+   * widget normalisations applied by configure(), while preserving the
+   * on-disk baseline used by isModified.
    */
-  reset(state?: ComfyWorkflowJSON) {
-    // Do not reset the state if we are restoring.
+  syncCanvasState(state: ComfyWorkflowJSON) {
     if (this._restoringState) return
+    this.activeState = clone(state)
+  }
 
-    if (state) this.activeState = clone(state)
+  /**
+   * Mark the current activeState as the saved baseline (initialState).
+   * Only called after a successful save — not during tab switches.
+   */
+  reset() {
+    if (this._restoringState) return
     this.initialState = clone(this.activeState)
   }
 
